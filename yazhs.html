@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Yazhsss</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  background:black;
+}
+
+/* SLIDESHOW */
+.slide{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-size:cover;
+  background-position:center;
+  opacity:0;
+  animation:slideShow 18s infinite;
+}
+
+.slide1{background-image:url('photo1.jpg'); animation-delay:0s;}
+.slide2{background-image:url('photo2.jpg'); animation-delay:6s;}
+.slide3{background-image:url('photo3.jpg'); animation-delay:12s;}
+
+@keyframes slideShow{
+  0%{opacity:0; transform:scale(1);}
+  10%{opacity:1; transform:scale(1.05);}
+  30%{opacity:1;}
+  40%{opacity:0; transform:scale(1);}
+  100%{opacity:0;}
+}
+
+/* OVERLAY */
+.overlay{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.45);
+}
+
+/* CONTENT */
+.content{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  text-align:center;
+  padding:20px;
+}
+
+h1{
+  font-size:2.2rem;
+  margin-bottom:15px;
+  animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+  from{text-shadow:0 0 10px pink;}
+  to{text-shadow:0 0 25px hotpink;}
+}
+
+p{
+  font-size:1.3rem;
+  margin-bottom:25px;
+}
+
+/* BUTTONS */
+.buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:15px;
+  justify-content:center;
+}
+
+button{
+  padding:12px 22px;
+  border:none;
+  border-radius:25px;
+  font-size:1rem;
+  cursor:pointer;
+  background:linear-gradient(45deg, pink, hotpink);
+  color:white;
+  box-shadow:0 0 15px rgba(255,105,180,0.6);
+  transition:transform 0.3s;
+}
+
+button:hover{
+  transform:scale(1.1);
+}
+
+/* POPUP */
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+}
+
+.popup-content{
+  background:white;
+  color:black;
+  padding:30px;
+  border-radius:20px;
+  max-width:90%;
+  text-align:center;
+  animation:pop 0.5s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(0.5); opacity:0;}
+  to{transform:scale(1); opacity:1;}
+}
+
+.close{
+  margin-top:20px;
+  padding:8px 18px;
+  border:none;
+  background:hotpink;
+  color:white;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+/* TYPEWRITER */
+.typewriter{
+  font-size:1.2rem;
+  line-height:1.7;
+  white-space:pre-line;
+  border-right:2px solid hotpink;
+  animation:blink 0.8s infinite;
+}
+
+@keyframes blink{
+  50%{border-color:transparent;}
+}
+
+/* FLOATING HEARTS */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  color:pink;
+  font-size:20px;
+  animation:float 6s linear infinite;
+}
+
+@keyframes float{
+  0%{transform:translateY(0); opacity:1;}
+  100%{transform:translateY(-100vh); opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="slide slide1"></div>
+<div class="slide slide2"></div>
+<div class="slide slide3"></div>
+<div class="overlay"></div>
+
+<div class="content">
+  <h1>Happy Birthday Yazhsss 💖</h1>
+  <p>As long as I exist, you’ll be loved 🤍</p>
+
+  <div class="buttons">
+    <button onclick="openPopup('msg')">💌 Message</button>
+    <button onclick="openPopup('love')">💖 One Line</button>
+    <button onclick="openPopup('tamil')">✨ Take it</button>
+  </div>
+</div>
+
+<!-- MESSAGE POPUP -->
+<div class="popup" id="msg">
+  <div class="popup-content">
+    <h2>💌</h2>
+    <p id="typeText" class="typewriter"></p>
+    <button class="close" onclick="closePopup()">Close</button>
+  </div>
+</div>
+
+<!-- ONE LINE POPUP -->
+<div class="popup" id="love">
+  <div class="popup-content">
+    <h2>🤍</h2>
+    <p>As long as I exist,<br>you’ll never be unloved.</p>
+    <button class="close" onclick="closePopup()">Close</button>
+  </div>
+</div>
+
+<!-- TAMIL POPUP -->
+<div class="popup" id="tamil">
+  <div class="popup-content">
+    <h2>🤍</h2>
+    <p>
+      அண்ண கிளியே<br>
+      வண்ண குயிலே<br>
+      குட்டி குறும்பே<br>
+      கட்டு கரும்பே
+    </p>
+    <button class="close" onclick="closePopup()">Close</button>
+  </div>
+</div>
+
+<script>
+const message = `naama epdi friend anom nuh theriyala
+but stillllll haapppyyyyyy 🫶
+safestttt placeee of my heart la
+erukeengaaa yazhss neengaaaa 🤍
+lotzzz u endless thaan u thinkkkkk
+aproo sorry for the late wishessssssssssssss!!!!!!!`;
+
+let index = 0;
+let typing;
+
+function typeMessage(){
+  const el = document.getElementById("typeText");
+  el.innerHTML = "";
+  index = 0;
+  clearInterval(typing);
+  typing = setInterval(()=>{
+    if(index < message.length){
+      el.innerHTML += message.charAt(index);
+      index++;
+    }else{
+      clearInterval(typing);
+    }
+  },40);
+}
+
+function openPopup(id){
+  document.getElementById(id).style.display="flex";
+  if(id === "msg"){
+    typeMessage();
+  }
+}
+
+function closePopup(){
+  document.querySelectorAll('.popup').forEach(p=>p.style.display="none");
+}
+
+/* HEART GENERATOR */
+setInterval(()=>{
+  const heart=document.createElement('div');
+  heart.className='heart';
+  heart.innerHTML='❤';
+  heart.style.left=Math.random()*100+'vw';
+  heart.style.fontSize=(15+Math.random()*20)+'px';
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),6000);
+},500);
+</script>
+
+</body>
+</html>
